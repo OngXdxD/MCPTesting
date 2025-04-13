@@ -1,0 +1,23 @@
+name: Create File
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create-file:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create file
+        run: |
+          echo "File created at $(date)" > auto-generated-file.txt
+
+      - name: Commit and push
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add auto-generated-file.txt
+          git commit -m "Automatically created file"
+          git push
