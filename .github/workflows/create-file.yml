@@ -3,12 +3,17 @@ name: Create File
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   create-file:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Create file
         run: |
@@ -19,5 +24,5 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           git add auto-generated-file.txt
-          git commit -m "Automatically created file"
+          git commit -m "Automatically created file" || echo "No changes to commit"
           git push
